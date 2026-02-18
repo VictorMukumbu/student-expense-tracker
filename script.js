@@ -1,37 +1,51 @@
-// Select elements from HTML
-const totalDisplay = document.getElementById("totalAmount");
-const expenseName = document.getElementById("expenseName");
-const expenseAmount = document.getElementById("expenseAmount");
-const expenseList = document.getElementById("expenseList");
-const button = document.querySelector("button");
-
 let total = 0;
 
-// Add click event
-button.addEventListener("click", function () {
+const expenseNameInput = document.getElementById("expense-name");
+const expenseAmountInput = document.getElementById("expense-amount");
+const addButton = document.getElementById("add-btn");
+const expenseList = document.getElementById("expense-list");
+const totalDisplay = document.getElementById("total");
 
-    // Get values from inputs
-    const name = expenseName.value;
-    const amount = Number(expenseAmount.value);
+addButton.addEventListener("click", function () {
+  const name = expenseNameInput.value.trim();
+  const amount = Number(expenseAmountInput.value);
 
-    // Prevent empty inputs
-    if (name === "" || amount === "") {
-        alert("Please enter expense name and amount");
-        return;
-    }
+  if (name === "" || amount <= 0) {
+    alert("Please enter valid expense details.");
+    return;
+  }
 
-    // Create new list item
-    const li = document.createElement("li");
-    li.textContent = `${name} - KES ${amount}`;
+  // Create list item
+  const listItem = document.createElement("li");
 
-    // Add item to list
-    expenseList.appendChild(li);
-    // Update total
-    total += amount;
-    totalDisplay.textContent = `Total: KES ${total}`;
+  // Create text span
+  const textSpan = document.createElement("span");
+  textSpan.textContent = `${name} - KES ${amount}`;
 
+  // Create delete button
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn");
 
-    // Clear input fields
-    expenseName.value = "";
-    expenseAmount.value = "";
+  // Delete action
+  deleteBtn.addEventListener("click", function () {
+    expenseList.removeChild(listItem);
+    total -= amount;
+    totalDisplay.textContent = total;
+  });
+
+  // Add elements to list item
+  listItem.appendChild(textSpan);
+  listItem.appendChild(deleteBtn);
+
+  // Add list item to list
+  expenseList.appendChild(listItem);
+
+  // Update total
+  total += amount;
+  totalDisplay.textContent = total;
+
+  // Clear inputs
+  expenseNameInput.value = "";
+  expenseAmountInput.value = "";
 });

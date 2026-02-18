@@ -1,26 +1,21 @@
 # Student Expense Tracker (KES)
 
-A simple web application that helps students track daily expenses and calculate total spending.
+A simple web app to track daily expenses in Kenyan Shillings (KES).
 
-## 🚀 Live Demo
-https://victormukumbu.github.io/student-expense-tracker/
+## Features
+- Add an expense name and amount
+- Display expenses in a list
+- Automatically calculates total spending
+- Delete any expense and update the total instantly
 
-## 📌 Features
-- Add expense name and amount
-- Automatic total calculation
-- Clean and simple interface
-- Built using vanilla JavaScript
-  
-## 🛠️ Technologies Used
+## Tech Stack
 - HTML
 - CSS
 - JavaScript
 
-## 📚 What I Learned
-- DOM manipulation
-- Event handling
-- JavaScript variables and logic
-- Deploying projects using GitHub Pages
+## How to Run
+1. Download or clone the project
+2. Open `index.html` in your browser
 
-## 👨‍💻 Author
-Aspiring Software Developer documenting my journey into tech (2026).
+## Learning Goal
+This project is part of my public journey into software development in 2026.
