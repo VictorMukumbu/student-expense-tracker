@@ -2,16 +2,23 @@
 
 A simple web app to track daily expenses in Kenyan Shillings (KES).
 
-## Features
-- Add an expense name and amount
-- Display expenses in a list
-- Automatically calculates total spending
-- Delete any expense and update the total instantly
+Day 6 of my Software Development journey in Kenya 🇰🇪
 
-## Tech Stack
+## Features
+- Add an expense name + amount
+- Display expenses in a list
+- Auto-clear inputs after adding
+- Shows total spent in KES
+
+## Tech Used
 - HTML
 - CSS
 - JavaScript
+
+## What I learned (Day 5)
+- Javascript code refactoring
+- template literals
+- function blocks
 
 ## How to Run
 1. Download or clone the project
