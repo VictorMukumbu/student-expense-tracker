@@ -1,51 +1,35 @@
 let total = 0;
+const totalAmountDisplay = document.getElementById("totalAmount");
+// Select elements
+const expenseNameInput = document.getElementById("expenseName");
+const expenseAmountInput = document.getElementById("expenseAmount");
+const addExpenseBtn = document.getElementById("addExpenseBtn");
+const expenseList = document.getElementById("expenseList");
 
-const expenseNameInput = document.getElementById("expense-name");
-const expenseAmountInput = document.getElementById("expense-amount");
-const addButton = document.getElementById("add-btn");
-const expenseList = document.getElementById("expense-list");
-const totalDisplay = document.getElementById("total");
+// 1. When the button is clicked
+addExpenseBtn.addEventListener("click", function () {
+  
+  // 2. Get input values
+  const expenseName = expenseNameInput.value;
+  const expenseAmount = expenseAmountInput.value;
 
-addButton.addEventListener("click", function () {
-  const name = expenseNameInput.value.trim();
-  const amount = Number(expenseAmountInput.value);
-
-  if (name === "" || amount <= 0) {
-    alert("Please enter valid expense details.");
+  // 3. Check if inputs are empty
+  if (expenseName === "" || expenseAmount === "") {
+    alert("Please enter both expense name and amount.");
     return;
   }
 
-  // Create list item
+  // 4. Create a new list item
   const listItem = document.createElement("li");
+  listItem.textContent = expenseName + " - KES " + expenseAmount;
 
-  // Create text span
-  const textSpan = document.createElement("span");
-  textSpan.textContent = `${name} - KES ${amount}`;
-
-  // Create delete button
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "Delete";
-  deleteBtn.classList.add("delete-btn");
-
-  // Delete action
-  deleteBtn.addEventListener("click", function () {
-    expenseList.removeChild(listItem);
-    total -= amount;
-    totalDisplay.textContent = total;
-  });
-
-  // Add elements to list item
-  listItem.appendChild(textSpan);
-  listItem.appendChild(deleteBtn);
-
-  // Add list item to list
+  // 5. Append to the list
   expenseList.appendChild(listItem);
-
   // Update total
-  total += amount;
-  totalDisplay.textContent = total;
+  total += parseFloat(expenseAmount);
+  totalAmountDisplay.textContent = "KES " + total.toFixed(2);
 
-  // Clear inputs
+  // 6. Clear input fields
   expenseNameInput.value = "";
   expenseAmountInput.value = "";
 });
