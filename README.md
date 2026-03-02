@@ -15,7 +15,7 @@ Day 6 of my Software Development journey in Kenya 🇰🇪
 - CSS
 - JavaScript
 
-## What I learned (Day 5)
+## What I learned (Day 6)
 - Javascript code refactoring
 - template literals
 - function blocks
