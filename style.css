@@ -106,6 +106,15 @@ body {
   color: #111;
   font-weight: 600;
 }
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.clear-btn {
+  background: #ff3b30;
+}
 
 .list {
   list-style: none;
