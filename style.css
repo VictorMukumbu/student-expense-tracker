@@ -47,7 +47,7 @@ body {
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3,1fr);
   gap: 12px;
   margin-bottom: 14px;
 }
@@ -69,6 +69,22 @@ body {
 }
 
 .field input:focus {
+  border-color: #ff6a00;
+  box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.12);
+}
+
+/* day 8:adding totals per category */
+.field select {
+  width: 100%;
+  padding: 12px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+}
+
+.field select:focus {
   border-color: #ff6a00;
   box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.12);
 }
