@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <main class="container">
     <header class="header">
       <h1>Student Expense Tracker</h1>
@@ -27,6 +26,7 @@
           <label for="expenseAmount">Amount (KES)</label>
           <input id="expenseAmount" type="number" placeholder="e.g. 150" />
         </div>
+
         <div class="field">
           <label for="expenseCategory">Category</label>
           <select id="expenseCategory">
@@ -40,17 +40,43 @@
         </div>
       </div>
 
-      <button id="addExpenseBtn" class="btn">Add Expense</button>
+      <button id="addExpenseBtn" class="btn" type="button">Add Expense</button>
     </section>
 
     <section class="card">
       <div class="card-head">
         <h2>Expenses</h2>
-        <h3 class="total">Total: <span id="totalAmount">KES 0</span></h3>
+        <h3 class="total">Total: <span id="totalAmount">KES 0.00</span></h3>
       </div>
 
       <ul id="expenseList" class="list">
-        <!-- items will appear here -->
+        <!-- expenses will appear here -->
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Category Totals</h2>
+      <ul id="categoryTotals" class="list">
+        <li>
+          <span class="name">Food</span>
+          <span class="amount" id="foodTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Transport</span>
+          <span class="amount" id="transportTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Airtime/Data</span>
+          <span class="amount" id="airtimeTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Bills</span>
+          <span class="amount" id="billsTotal">KES 0.00</span>
+        </li>
+        <li>
+          <span class="name">Other</span>
+          <span class="amount" id="otherTotal">KES 0.00</span>
+        </li>
       </ul>
     </section>
   </main>

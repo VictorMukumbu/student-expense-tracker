@@ -1,44 +1,103 @@
 let total = 0;
+
+let categoryTotals = {
+  Food: 0,
+  Transport: 0,
+  "Airtime/Data": 0,
+  Bills: 0,
+  Other: 0
+};
+
 const totalAmountDisplay = document.getElementById("totalAmount");
-// Select elements
+
 const expenseNameInput = document.getElementById("expenseName");
 const expenseAmountInput = document.getElementById("expenseAmount");
+const expenseCategoryInput = document.getElementById("expenseCategory");
 const addExpenseBtn = document.getElementById("addExpenseBtn");
 const expenseList = document.getElementById("expenseList");
-const expenseCategoryInput = document.getElementById("expenseCategory");
 
-// 1. When the button is clicked -add expense function
-const addExpense = () => {
-  // 2. Get input values
+const foodTotalDisplay = document.getElementById("foodTotal");
+const transportTotalDisplay = document.getElementById("transportTotal");
+const airtimeTotalDisplay = document.getElementById("airtimeTotal");
+const billsTotalDisplay = document.getElementById("billsTotal");
+const otherTotalDisplay = document.getElementById("otherTotal");
+
+function updateTotalUI() {
+  totalAmountDisplay.textContent = `KES ${total.toFixed(2)}`;
+}
+
+function updateCategoryTotalsUI() {
+  foodTotalDisplay.textContent = `KES ${categoryTotals["Food"].toFixed(2)}`;
+  transportTotalDisplay.textContent = `KES ${categoryTotals["Transport"].toFixed(2)}`;
+  airtimeTotalDisplay.textContent = `KES ${categoryTotals["Airtime/Data"].toFixed(2)}`;
+  billsTotalDisplay.textContent = `KES ${categoryTotals["Bills"].toFixed(2)}`;
+  otherTotalDisplay.textContent = `KES ${categoryTotals["Other"].toFixed(2)}`;
+}
+
+function addExpense() {
   const expenseName = expenseNameInput.value.trim();
-  const expenseAmount = expenseAmountInput.value.trim();
+  const expenseAmount = Number(expenseAmountInput.value);
   const expenseCategory = expenseCategoryInput.value;
 
-  // 3. Check if inputs are empty
-  if (expenseName === "" || expenseAmount === ""|| expenseCategory === "") {
-    alert("Please enter expense name , amount and category.");
+  if (
+    expenseName === "" ||
+    expenseAmountInput.value.trim() === "" ||
+    expenseCategory === ""
+  ) {
+    alert("Please enter expense name, amount and category.");
     return;
   }
-  if (expenseAmount <= 0) {
+
+  if (isNaN(expenseAmount) || expenseAmount <= 0) {
     alert("Amount must be greater than zero.");
     return;
   }
 
-  // 4. Create a new list item
   const listItem = document.createElement("li");
-  listItem.textContent = `${expenseName} - KES ${expenseAmount} (${expenseCategory})`;
 
-  // 5. Append to the list
+  const nameSpan = document.createElement("span");
+  nameSpan.classList.add("name");
+  nameSpan.textContent = expenseName;
+
+  const categorySpan = document.createElement("span");
+  categorySpan.classList.add("category");
+  categorySpan.textContent = expenseCategory;
+
+  const amountSpan = document.createElement("span");
+  amountSpan.classList.add("amount");
+  amountSpan.textContent = `KES ${expenseAmount.toFixed(2)}`;
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn");
+
+  deleteBtn.addEventListener("click", function () {
+    total -= expenseAmount;
+    categoryTotals[expenseCategory] -= expenseAmount;
+
+    updateTotalUI();
+    updateCategoryTotalsUI();
+
+    listItem.remove();
+  });
+
+  listItem.appendChild(nameSpan);
+  listItem.appendChild(categorySpan);
+  listItem.appendChild(amountSpan);
+  listItem.appendChild(deleteBtn);
+
   expenseList.appendChild(listItem);
-  // Update total
-  total += parseFloat(expenseAmount);
-  totalAmountDisplay.textContent = "KES " + total.toFixed(2);
 
-  // 6. Clear input fields
+  total += expenseAmount;
+  categoryTotals[expenseCategory] += expenseAmount;
+
+  updateTotalUI();
+  updateCategoryTotalsUI();
+
   expenseNameInput.value = "";
   expenseAmountInput.value = "";
   expenseCategoryInput.value = "";
-
 }
-// 7. Add event listener to the button-call the addExpense function when clicked
+
 addExpenseBtn.addEventListener("click", addExpense);
