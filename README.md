@@ -7,6 +7,11 @@ A simple web application for tracking daily expenses in Kenyan Shillings (KES).
 
 ![Expense Tracker mobile view](screenshots/Screenshot%20app%201%20mobile%202026-03-09%20230741.png)
 
+![Search feature mobile](screenshots/search-feature-mobile.png)
+![Sort feature mobile](screenshots/sort-feature-mobile.png)
+![Edit feature mobile](screenshots/edit-feature-mobile.png)
+![Desktop expense features ](screenshots/desktop-expense-features.png)
+
 ## live site
 https://victormukumbu.github.io/student-expense-tracker
 ## Features
@@ -18,6 +23,10 @@ https://victormukumbu.github.io/student-expense-tracker
 - Delete individual expenses
 - Clear all expenses
 - Data persists using LocalStorage
+# Day 9 updates
+- Search / filter expenses
+- Sort expenses
+- Edit existing expenses
 
 ## Technologies Used
 
@@ -47,11 +56,17 @@ The app automatically:
 - Saves data in the browser
 
 ## Future Improvements
-
-- Search/filter expenses
 - Monthly summaries
 - Charts for spending analysis
 - Export expenses to CSV
+
+## Development Progress
+# Day 9
+- Added usability improvements:
+- Search and filter expenses
+- Sort expenses by name, amount, and category
+- Edit existing expenses
+- Improved UI alignment for expense rows
 
 ## Author
 
