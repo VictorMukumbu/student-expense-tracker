@@ -1,13 +1,20 @@
 let total = 0;
 let expenses = [];
 
-let categoryTotals = {
-  Food: 0,
-  Transport: 0,
-  "Airtime/Data": 0,
-  Bills: 0,
-  Other: 0
-};
+// one reusable function that returns a fresh category totals object
+function getDefaultCategoryTotals() {
+  return {
+    Food: 0,
+    Transport: 0,
+    "Airtime/Data": 0,
+    Bills: 0,
+    Other: 0
+  };
+}
+
+
+
+let categoryTotals = getDefaultCategoryTotals();
 
 const totalAmountDisplay = document.getElementById("totalAmount");
 
@@ -17,6 +24,9 @@ const expenseCategoryInput = document.getElementById("expenseCategory");
 const addExpenseBtn = document.getElementById("addExpenseBtn");
 const clearExpensesBtn = document.getElementById("clearExpensesBtn");
 const expenseList = document.getElementById("expenseList");
+
+const searchExpenseInput = document.getElementById("searchExpense");
+const sortExpensesSelect = document.getElementById("sortExpenses");
 
 const foodTotalDisplay = document.getElementById("foodTotal");
 const transportTotalDisplay = document.getElementById("transportTotal");
@@ -36,8 +46,29 @@ function updateCategoryTotalsUI() {
   otherTotalDisplay.textContent = `KES ${categoryTotals["Other"].toFixed(2)}`;
 }
 
+// recalculate totals from the expenses array
+function recalculateTotals() {
+  total = 0;
+  categoryTotals = getDefaultCategoryTotals();
+
+  expenses.forEach((expense) => {
+    total += expense.amount;
+    categoryTotals[expense.category] += expense.amount;
+  });
+
+  updateTotalUI();
+  updateCategoryTotalsUI();
+}
+
 function saveExpensesToLocalStorage() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+// one function that clears the form inputs
+function clearInputs() {
+  expenseNameInput.value = "";
+  expenseAmountInput.value = "";
+  expenseCategoryInput.value = "";
 }
 
 function createExpenseListItem(expense) {
@@ -61,16 +92,10 @@ function createExpenseListItem(expense) {
   deleteBtn.classList.add("delete-btn");
 
   deleteBtn.addEventListener("click", function () {
-    total -= expense.amount;
-    categoryTotals[expense.category] -= expense.amount;
-
     expenses = expenses.filter((item) => item !== expense);
     saveExpensesToLocalStorage();
-
-    updateTotalUI();
-    updateCategoryTotalsUI();
-
-    listItem.remove();
+    recalculateTotals();
+    renderExpenses();
   });
 
   listItem.appendChild(nameSpan);
@@ -79,6 +104,29 @@ function createExpenseListItem(expense) {
   listItem.appendChild(deleteBtn);
 
   expenseList.appendChild(listItem);
+}
+
+function renderExpenses() {
+  expenseList.innerHTML = "";
+
+  const searchTerm = searchExpenseInput.value.toLowerCase();
+  let matchesFound = false;
+
+  expenses.forEach((expense) => {
+    const nameMatch = expense.name.toLowerCase().includes(searchTerm);
+    const categoryMatch = expense.category.toLowerCase().includes(searchTerm);
+
+    if (nameMatch || categoryMatch) {
+      createExpenseListItem(expense);
+      matchesFound = true;
+    }
+  });
+
+  if (!matchesFound) {
+    const emptyMessage = document.createElement("li");
+    emptyMessage.textContent = "No matching expenses found.";
+    expenseList.appendChild(emptyMessage);
+  }
 }
 
 function addExpense() {
@@ -109,36 +157,20 @@ function addExpense() {
   expenses.push(expense);
   saveExpensesToLocalStorage();
 
-  total += expense.amount;
-  categoryTotals[expense.category] += expense.amount;
+  renderExpenses();
+  recalculateTotals();
 
-  createExpenseListItem(expense);
-  updateTotalUI();
-  updateCategoryTotalsUI();
-
-  expenseNameInput.value = "";
-  expenseAmountInput.value = "";
-  expenseCategoryInput.value = "";
+  clearInputs();
 }
 
 function clearAllExpenses() {
-  expenseList.innerHTML = "";
-
-  total = 0;
   expenses = [];
-
-  categoryTotals = {
-    Food: 0,
-    Transport: 0,
-    "Airtime/Data": 0,
-    Bills: 0,
-    Other: 0
-  };
+  expenseList.innerHTML = "";
+  categoryTotals = getDefaultCategoryTotals();
+  total = 0;
 
   localStorage.removeItem("expenses");
-
-  updateTotalUI();
-  updateCategoryTotalsUI();
+  recalculateTotals();
 }
 
 function loadExpensesFromLocalStorage() {
@@ -150,17 +182,13 @@ function loadExpensesFromLocalStorage() {
 
   expenses = JSON.parse(savedExpenses);
 
-  expenses.forEach((expense) => {
-    total += expense.amount;
-    categoryTotals[expense.category] += expense.amount;
-    createExpenseListItem(expense);
-  });
+  renderExpenses();
 
-  updateTotalUI();
-  updateCategoryTotalsUI();
+  recalculateTotals();
 }
 
 addExpenseBtn.addEventListener("click", addExpense);
 clearExpensesBtn.addEventListener("click", clearAllExpenses);
+searchExpenseInput.addEventListener("input", renderExpenses);
 
 loadExpensesFromLocalStorage();

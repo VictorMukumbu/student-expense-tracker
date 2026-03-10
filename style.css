@@ -112,6 +112,14 @@ body {
   gap: 12px;
 }
 
+.search-field {
+  margin-top: 14px;
+}
+
+.search-field input {
+  background: #fffdfb;
+}
+
 .clear-btn {
   background: #ff3b30;
 }

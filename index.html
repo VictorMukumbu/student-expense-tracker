@@ -41,15 +41,37 @@
       </div>
 
       <div class="button-row">
-  <button id="addExpenseBtn" class="btn" type="button">Add Expense</button>
-  <button id="clearExpensesBtn" class="btn clear-btn" type="button">Clear All</button>
-</div>
+        <button id="addExpenseBtn" class="btn" type="button">Add Expense</button>
+        <button id="clearExpensesBtn" class="btn clear-btn" type="button">Clear All</button>
+      </div>
     </section>
 
     <section class="card">
       <div class="card-head">
         <h2>Expenses</h2>
         <h3 class="total">Total: <span id="totalAmount">KES 0.00</span></h3>
+      </div>
+
+      <div class="field search-field">
+        <label for="searchExpense">Search Expenses</label>
+        <input
+          id="searchExpense"
+          type="text"
+          placeholder="Search by name or category"
+        />
+      </div>
+
+      <!-- sort expenses by name, amount, or category -->
+      <div class="field sort-field">
+        <label for="sortExpenses">Sort Expenses</label>
+        <select id="sortExpenses">
+          <option value="default">Default</option>
+          <option value="name-asc">Name (A-Z)</option>
+          <option value="name-desc">Name (Z-A)</option>
+          <option value="amount-asc">Amount (Low to High)</option>
+          <option value="amount-desc">Amount (High to Low)</option>
+          <option value="category-asc">Category (A-Z)</option>
+        </select>
       </div>
 
       <ul id="expenseList" class="list">
