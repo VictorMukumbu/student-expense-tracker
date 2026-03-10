@@ -115,7 +115,9 @@ body {
 .search-field {
   margin-top: 14px;
 }
-
+.sort-field {
+  margin-top: 14px;
+}
 .search-field input {
   background: #fffdfb;
 }
