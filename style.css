@@ -122,6 +122,22 @@ body {
   background: #fffdfb;
 }
 
+.edit-btn {
+  background: #111111;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.edit-btn:hover {
+  opacity: 0.9;
+}
+
 .clear-btn {
   background: #ff3b30;
 }
@@ -134,13 +150,14 @@ body {
 
 .list li {
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto;
   align-items: center;
   gap: 12px;
-  padding: 12px;
+  padding: 14px;
   border: 1px solid #eee;
   border-radius: 12px;
   margin-bottom: 10px;
+  background: #fff;
 }
 
 .list li .name {
@@ -159,6 +176,18 @@ body {
 .list li .amount {
   color: #ff6a00;
   font-weight: 700;
+  text-align: right;
+}
+
+.list li:hover {
+  border-color: #ff6a00;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.edit-btn,
+.delete-btn {
+  justify-self: center;
+  min-width: 70px;
 }
 
 .delete-btn {

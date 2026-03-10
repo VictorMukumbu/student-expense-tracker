@@ -86,6 +86,24 @@ function createExpenseListItem(expense) {
   amountSpan.classList.add("amount");
   amountSpan.textContent = `KES ${expense.amount.toFixed(2)}`;
 
+  const editBtn = document.createElement("button");
+  editBtn.type = "button";
+  editBtn.textContent = "Edit";
+  editBtn.classList.add("edit-btn");
+
+  editBtn.addEventListener("click", function () {
+    expenseNameInput.value = expense.name;
+    expenseAmountInput.value = expense.amount;
+    expenseCategoryInput.value = expense.category;
+
+    expenses = expenses.filter((item) => item !== expense);
+    saveExpensesToLocalStorage();
+    recalculateTotals();
+    renderExpenses();
+
+    addExpenseBtn.textContent = "Update Expense";
+  });
+
   const deleteBtn = document.createElement("button");
   deleteBtn.type = "button";
   deleteBtn.textContent = "Delete";
@@ -101,6 +119,7 @@ function createExpenseListItem(expense) {
   listItem.appendChild(nameSpan);
   listItem.appendChild(categorySpan);
   listItem.appendChild(amountSpan);
+  listItem.appendChild(editBtn);
   listItem.appendChild(deleteBtn);
 
   expenseList.appendChild(listItem);
@@ -174,6 +193,8 @@ function addExpense() {
   recalculateTotals();
 
   clearInputs();
+
+  addExpenseBtn.textContent = "Add Expense";
 }
 
 function clearAllExpenses() {
