@@ -38,6 +38,12 @@
             <option value="Other">Other</option>
           </select>
         </div>
+
+        <div class="field">
+          <label for="expenseDate">Date</label>
+          <input id="expenseDate" type="date" />
+        </div>
+        
       </div>
 
       <div class="button-row">
@@ -77,6 +83,32 @@
       <ul id="expenseList" class="list">
         <!-- expenses will appear here -->
       </ul>
+    </section>
+
+    <!-- dashboard with total expenses by category -->
+     <section class="card">
+      <h2>Spending Insights</h2>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h3>Total Expenses</h3>
+          <p id="totalExpensesCount">0</p>
+        </div>
+
+        <div class="insight-card">
+          <h3>Average Expense</h3>
+          <p id="averageExpense">KES 0.00</p>
+        </div>
+
+        <div class="insight-card">
+          <h3>Top Category</h3>
+          <p id="topCategory">None</p>
+        </div>
+
+        <div class="insight-card">
+          <h3>Last Expense</h3>
+          <p id="lastExpense">None</p>
+        </div>
+      </div>
     </section>
 
     <section class="card">

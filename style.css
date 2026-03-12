@@ -46,7 +46,7 @@ body {
 
 .form-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin-bottom: 14px;
 }
@@ -150,7 +150,7 @@ body {
 
 .list li {
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto;
+  grid-template-columns: 1fr repeat(5,auto);
   align-items: center;
   gap: 12px;
   padding: 14px;
@@ -158,6 +158,12 @@ body {
   border-radius: 12px;
   margin-bottom: 10px;
   background: #fff;
+}
+
+.list li .date {
+  color: #666;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 .list li .name {
@@ -206,6 +212,35 @@ body {
   opacity: 0.9;
 }
 
+/* Insights Dashboard */
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.insight-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fffdfb;
+  text-align: center;
+}
+
+.insight-card h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.insight-card p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ff6a00;
+}
+
 @media (max-width: 640px) {
   .form-row {
     grid-template-columns: 1fr;
@@ -216,7 +251,49 @@ body {
   }
 
   .list li {
-    grid-template-columns: 1fr;
+    /* grid-template-columns: 1fr; */
+    grid-template-columns: 1fr 1fr;
     align-items: start;
+    gap: 10px;
+  }
+
+  .list li .name {
+    font-size: 15px;
+  }
+
+  .list li .category,
+  .list li .date,
+  .list li .amount {
+    display: inline-block;
+  }
+
+  .list li .amount {
+    text-align: left;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .button-row {
+    grid-template-columns:1fr;
+  }
+
+  .card-head {
+    flex-direction: column;
+    /* align-items: flex-start; */
+    align-items: center;
+  }
+
+  .list li .category,
+  .list li .date,
+  .list li .amount {
+    margin-top: 2px;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }

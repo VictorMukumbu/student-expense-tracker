@@ -21,6 +21,8 @@ const totalAmountDisplay = document.getElementById("totalAmount");
 const expenseNameInput = document.getElementById("expenseName");
 const expenseAmountInput = document.getElementById("expenseAmount");
 const expenseCategoryInput = document.getElementById("expenseCategory");
+const expenseDateInput = document.getElementById("expenseDate");
+
 const addExpenseBtn = document.getElementById("addExpenseBtn");
 const clearExpensesBtn = document.getElementById("clearExpensesBtn");
 const expenseList = document.getElementById("expenseList");
@@ -34,6 +36,11 @@ const airtimeTotalDisplay = document.getElementById("airtimeTotal");
 const billsTotalDisplay = document.getElementById("billsTotal");
 const otherTotalDisplay = document.getElementById("otherTotal");
 
+const totalExpensesCountDisplay = document.getElementById("totalExpensesCount");
+const averageExpenseDisplay = document.getElementById("averageExpense");
+const topCategoryDisplay = document.getElementById("topCategory");
+const lastExpenseDisplay = document.getElementById("lastExpense");
+
 function updateTotalUI() {
   totalAmountDisplay.textContent = `KES ${total.toFixed(2)}`;
 }
@@ -44,6 +51,36 @@ function updateCategoryTotalsUI() {
   airtimeTotalDisplay.textContent = `KES ${categoryTotals["Airtime/Data"].toFixed(2)}`;
   billsTotalDisplay.textContent = `KES ${categoryTotals["Bills"].toFixed(2)}`;
   otherTotalDisplay.textContent = `KES ${categoryTotals["Other"].toFixed(2)}`;
+}
+//update dashboard insights
+function updateInsightsUI() {
+  const totalExpensesCount = expenses.length;
+  totalExpensesCountDisplay.textContent = totalExpensesCount;
+
+  if (totalExpensesCount === 0) {
+    averageExpenseDisplay.textContent = "KES 0.00";
+    topCategoryDisplay.textContent = "No category yet";
+    lastExpenseDisplay.textContent = "No expenses yet";
+    return;
+  }
+
+  const averageExpense = total / totalExpensesCount;
+  averageExpenseDisplay.textContent = `KES ${averageExpense.toFixed(2)}`;
+
+  let topCategory = "None";
+  let highestCategoryTotal = 0;
+
+  for (const category in categoryTotals) {
+    if (categoryTotals[category] > highestCategoryTotal) {
+      highestCategoryTotal = categoryTotals[category];
+      topCategory = category;
+    }
+  }
+
+  topCategoryDisplay.textContent = topCategory;
+
+  const lastExpense = expenses[expenses.length - 1];
+  lastExpenseDisplay.textContent = `${lastExpense.name} - KES ${lastExpense.amount.toFixed(2)} (${lastExpense.category}, ${formatDate(lastExpense.date) || "No date"})`;
 }
 
 // recalculate totals from the expenses array
@@ -58,6 +95,7 @@ function recalculateTotals() {
 
   updateTotalUI();
   updateCategoryTotalsUI();
+  updateInsightsUI();
 }
 
 function saveExpensesToLocalStorage() {
@@ -69,6 +107,20 @@ function clearInputs() {
   expenseNameInput.value = "";
   expenseAmountInput.value = "";
   expenseCategoryInput.value = "";
+  expenseDateInput.value = "";
+}
+
+//make date readable
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  const options = {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  };
+
+  return date.toLocaleDateString("en-GB", options);
 }
 
 function createExpenseListItem(expense) {
@@ -82,6 +134,10 @@ function createExpenseListItem(expense) {
   categorySpan.classList.add("category");
   categorySpan.textContent = expense.category;
 
+  const dateSpan = document.createElement("span");
+  dateSpan.classList.add("date");
+  dateSpan.textContent = formatDate(expense.date);
+  
   const amountSpan = document.createElement("span");
   amountSpan.classList.add("amount");
   amountSpan.textContent = `KES ${expense.amount.toFixed(2)}`;
@@ -95,6 +151,8 @@ function createExpenseListItem(expense) {
     expenseNameInput.value = expense.name;
     expenseAmountInput.value = expense.amount;
     expenseCategoryInput.value = expense.category;
+    expenseDateInput.value = expense.date || "";
+
 
     expenses = expenses.filter((item) => item !== expense);
     saveExpensesToLocalStorage();
@@ -118,6 +176,7 @@ function createExpenseListItem(expense) {
 
   listItem.appendChild(nameSpan);
   listItem.appendChild(categorySpan);
+  listItem.appendChild(dateSpan);
   listItem.appendChild(amountSpan);
   listItem.appendChild(editBtn);
   listItem.appendChild(deleteBtn);
@@ -134,7 +193,9 @@ function renderExpenses() {
   let filteredExpenses = expenses.filter((expense) => {
     const nameMatch = expense.name.toLowerCase().includes(searchTerm);
     const categoryMatch = expense.category.toLowerCase().includes(searchTerm);
-    return nameMatch || categoryMatch;
+    const dateMatch = (expense.date || "").toLowerCase().includes(searchTerm);
+
+    return nameMatch || categoryMatch || dateMatch;
   });
 
   if (sortValue === "name-asc") {
@@ -165,13 +226,15 @@ function addExpense() {
   const expenseName = expenseNameInput.value.trim();
   const expenseAmount = Number(expenseAmountInput.value);
   const expenseCategory = expenseCategoryInput.value;
+  const expenseDate = expenseDateInput.value;
 
   if (
     expenseName === "" ||
     expenseAmountInput.value.trim() === "" ||
-    expenseCategory === ""
+    expenseCategory === "" ||
+    expenseDate === ""
   ) {
-    alert("Please enter expense name, amount and category.");
+    alert("Please enter expense name, amount, category, and date.");
     return;
   }
 
@@ -183,7 +246,8 @@ function addExpense() {
   const expense = {
     name: expenseName,
     amount: expenseAmount,
-    category: expenseCategory
+    category: expenseCategory,
+    date: expenseDate
   };
 
   expenses.push(expense);
