@@ -1,5 +1,6 @@
 let total = 0;
 let expenses = [];
+let editingExpenseIndex = null;
 
 // one reusable function that returns a fresh category totals object
 function getDefaultCategoryTotals() {
@@ -112,6 +113,8 @@ function clearInputs() {
 
 //make date readable
 function formatDate(dateString) {
+  if (!dateString) return "No date";// handle empty or undefined date
+  
   const date = new Date(dateString);
 
   const options = {
@@ -148,6 +151,10 @@ function createExpenseListItem(expense) {
   editBtn.classList.add("edit-btn");
 
   editBtn.addEventListener("click", function () {
+    const expenseIndex = expenses.indexOf(expense);
+
+    editingExpenseIndex = expenseIndex;
+
     expenseNameInput.value = expense.name;
     expenseAmountInput.value = expense.amount;
     expenseCategoryInput.value = expense.category;
@@ -160,6 +167,18 @@ function createExpenseListItem(expense) {
     renderExpenses();
 
     addExpenseBtn.textContent = "Update Expense";
+
+    // add editing class to highlight the form when in edit mode
+    document
+    .getElementById("addExpenseSection")
+    .classList.add("editing");
+
+    // scroll to the add/edit form and focus the name input for better UX
+    document
+      .getElementById("addExpenseSection")
+      .scrollIntoView({ behavior: "smooth" });
+
+    expenseNameInput.focus();
   });
 
   const deleteBtn = document.createElement("button");
@@ -212,7 +231,13 @@ function renderExpenses() {
 
   if (filteredExpenses.length === 0) {
     const emptyMessage = document.createElement("li");
-    emptyMessage.textContent = "No matching expenses found.";
+
+    if (expenses.length === 0) {
+      emptyMessage.textContent = "No expenses added yet.";
+    } else {
+      emptyMessage.textContent = "No matching expenses found.";
+    }
+
     expenseList.appendChild(emptyMessage);
     return;
   }
@@ -250,7 +275,12 @@ function addExpense() {
     date: expenseDate
   };
 
-  expenses.push(expense);
+  if (editingExpenseIndex !== null) {
+    expenses[editingExpenseIndex] = expense;
+    editingExpenseIndex = null;
+  } else {
+    expenses.push(expense);
+  }
   saveExpensesToLocalStorage();
 
   renderExpenses();
@@ -259,16 +289,56 @@ function addExpense() {
   clearInputs();
 
   addExpenseBtn.textContent = "Add Expense";
+  // remove editing class to return form to normal state
+  document
+  .getElementById("addExpenseSection")
+  .classList.remove("editing");
 }
+
 
 function clearAllExpenses() {
   expenses = [];
-  expenseList.innerHTML = "";
   categoryTotals = getDefaultCategoryTotals();
   total = 0;
+  editingExpenseIndex = null;
 
   localStorage.removeItem("expenses");
   recalculateTotals();
+  renderExpenses();
+
+  addExpenseBtn.textContent = "Add Expense";
+}
+
+const navLinks = document.querySelectorAll(".section-nav a");
+const trackedSections = document.querySelectorAll(
+  "#addExpenseSection, #expensesSection, #insightsSection, #categoryTotalsSection"
+);
+
+// focus on updating active nav link based on scroll position
+function updateActiveNavLink() {
+  let currentSectionId = "";
+
+  trackedSections.forEach((section) => {
+    const sectionTop = section.offsetTop - 120;
+    const sectionHeight = section.offsetHeight;
+
+    if (
+      window.scrollY >= sectionTop &&
+      window.scrollY < sectionTop + sectionHeight
+    ) {
+      currentSectionId = section.id;
+    }
+  });
+
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+
+    const targetId = link.getAttribute("href").slice(1);
+
+    if (targetId === currentSectionId) {
+      link.classList.add("active");
+    }
+  });
 }
 
 function loadExpensesFromLocalStorage() {
@@ -289,5 +359,8 @@ addExpenseBtn.addEventListener("click", addExpense);
 clearExpensesBtn.addEventListener("click", clearAllExpenses);
 searchExpenseInput.addEventListener("input", renderExpenses);
 sortExpensesSelect.addEventListener("change", renderExpenses);
+
+window.addEventListener("scroll", updateActiveNavLink);
+window.addEventListener("load", updateActiveNavLink);
 
 loadExpensesFromLocalStorage();

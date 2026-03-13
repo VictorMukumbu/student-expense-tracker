@@ -13,7 +13,15 @@
       <p>Track your daily spending in KES.</p>
     </header>
 
-    <section class="card">
+    <!-- navigation links to sections -->
+    <nav class="section-nav">
+      <a href="#addExpenseSection">Add Expense</a>
+      <a href="#expensesSection">Expenses</a>
+      <a href="#insightsSection">Insights</a>
+      <a href="#categoryTotalsSection">Category Totals</a>
+    </nav>
+
+    <section id="addExpenseSection" class="card">
       <h2>Add Expense</h2>
 
       <div class="form-row">
@@ -52,7 +60,7 @@
       </div>
     </section>
 
-    <section class="card">
+    <section  id="expensesSection" class="card">
       <div class="card-head">
         <h2>Expenses</h2>
         <h3 class="total">Total: <span id="totalAmount">KES 0.00</span></h3>
@@ -86,7 +94,7 @@
     </section>
 
     <!-- dashboard with total expenses by category -->
-     <section class="card">
+     <section  id="insightsSection" class="card">
       <h2>Spending Insights</h2>
       <div class="insights-grid">
         <div class="insight-card">
@@ -111,7 +119,7 @@
       </div>
     </section>
 
-    <section class="card">
+    <section id="categoryTotalsSection" class="card">
       <h2>Category Totals</h2>
       <ul id="categoryTotals" class="list">
         <li>
