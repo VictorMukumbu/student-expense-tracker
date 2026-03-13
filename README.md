@@ -12,13 +12,14 @@ https://victormukumbu.github.io/student-expense-tracker
 ---
 
 # 📸 Screenshots
-- ![Desktop view](screenshots/desktop-view.png)
-- ![Mobile view](screenshots/mobile-view.webm)
+- ![Spending chart Desktop view](screenshots/chart-desktop.png)
+- ![Spending chart Mobile view](screenshots/chart-mobile.png)
 
 
 ---
 
 # ✨ Features
+## Category spending chart visualization
 
 ## Expense Management
 
@@ -68,6 +69,33 @@ Sorting options include:
 - Active section highlighting while scrolling
 
 ---
+## Latest Update
+
+### Day 12 – Spending Chart Visualization
+
+The application now includes a **category spending chart** that visually displays how expenses are distributed across categories.
+
+#### What was added
+- Category spending chart section
+- Dynamic bar rendering using JavaScript
+- CSS styling for category bars
+- Automatic chart updates when:
+  - expenses are added
+  - expenses are edited
+  - expenses are deleted
+  - expenses are cleared
+  - saved data loads from local storage
+
+#### Categories displayed
+- Food
+- Transport
+- Airtime/Data
+- Bills
+- Other
+
+#### Key improvement
+The application now helps users **visualize spending patterns instead of only reading numbers**.
+
 
 # 🧠 Technologies Used
 
