@@ -1,73 +1,144 @@
-# Student Expense Tracker
+# 📊 Student Expense Tracker
 
-A simple web application for tracking daily expenses in Kenyan Shillings (KES).
+A modern JavaScript web application for tracking and analyzing daily expenses.  
+The app allows users to manage spending, analyze categories, and maintain persistent data directly in the browser.
 
-## app preview
-![Expense Tracker webview](screenshots/Screenshot%20app%201%20web%202026-03-09%20230410.png)
+-day 10,11
 
-![Expense Tracker mobile view](screenshots/Screenshot%20app%201%20mobile%202026-03-09%20230741.png)
+---
 
-![Search feature mobile](screenshots/search-feature-mobile.png)
-![Sort feature mobile](screenshots/sort-feature-mobile.png)
-![Edit feature mobile](screenshots/edit-feature-mobile.png)
-![Desktop expense features ](screenshots/desktop-expense-features.png)
-
-## live site
+# 🚀 Live Demo
 https://victormukumbu.github.io/student-expense-tracker
-## Features
+---
 
-- Add expenses with categories
-- Track total spending
-# day 8 updates
-- Track totals per category
+# 📸 Screenshots
+- ![Desktop view](screenshots/desktop-view.png)
+- ![Mobile view](screenshots/mobile-view.webm)
+
+
+---
+
+# ✨ Features
+
+## Expense Management
+
+- Add expenses with **name, amount, category, and date**
+- Edit expenses safely using an **editing state**
 - Delete individual expenses
-- Clear all expenses
-- Data persists using LocalStorage
-# Day 9 updates
-- Search / filter expenses
-- Sort expenses
-- Edit existing expenses
+- Clear all expenses instantly
 
-## Technologies Used
+## Financial Insights
 
-- HTML
-- CSS
-- JavaScript
-- LocalStorage
+- Automatic **total spending calculation**
+- **Totals per category**
+  - Food
+  - Transport
+  - Airtime/Data
+  - Bills
+  - Other
+- Spending **insights dashboard**
 
-## Categories
+## Data Persistence
 
-- Food
-- Transport
-- Airtime/Data
-- Bills
-- Other
+- Uses **Local Storage** so data remains saved even after refreshing the page
 
-## How It Works
+## Data Organization
 
-1. Enter an expense name
-2. Enter the amount in KES
-3. Choose a category
-4. Click **Add Expense**
+- **Search and filtering** to quickly locate expenses
+- **Sorting options** for better analysis
 
-The app automatically:
-- Updates totals
-- Updates category totals
-- Saves data in the browser
+Sorting options include:
 
-## Future Improvements
-- Monthly summaries
-- Charts for spending analysis
-- Export expenses to CSV
+- Name
+- Amount (Low → High)
+- Amount (High → Low)
+- Category
 
-## Development Progress
-# Day 9
-- Added usability improvements:
-- Search and filter expenses
-- Sort expenses by name, amount, and category
-- Edit existing expenses
-- Improved UI alignment for expense rows
+## User Experience Improvements
 
-## Author
+- Safe editing workflow that prevents accidental data loss
+- Smart empty-state messages
+- Robust date formatting validation
+- Consistent UI rendering flow
+
+## Interface & Navigation
+
+- **Responsive layout** for mobile and desktop devices
+- **Sticky section navigation**
+- Active section highlighting while scrolling
+
+---
+
+# 🧠 Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- LocalStorage API
+
+No frameworks were used.  
+The project focuses on **core JavaScript and DOM manipulation**.
+
+---
+
+# 🏗 Application Architecture
+
+The application follows a structured UI rendering approach:
+
+User Action  
+↓  
+Update Data  
+↓  
+Save to Local Storage  
+↓  
+Recalculate Totals  
+↓  
+Render UI
+
+This ensures the interface always reflects the current application state.
+
+---
+
+# 📚 What I Learned
+
+While building this project I practiced:
+
+- DOM manipulation
+- Event-driven UI updates
+- Data structures using arrays and objects
+- Local Storage persistence
+- Filtering and sorting algorithms
+- Safe editing workflows
+- UI rendering patterns
+- Responsive interface design
+- User experience improvements
+
+---
+
+# 🔮 Future Improvements
+
+Planned upgrades include:
+
+- Spending charts and data visualization
+- Export expenses to CSV / JSON
+- Dark mode support
+- Backend database integration
+- User authentication
+
+---
+
+# 📌 Project Purpose
+
+This project was built as part of a **public learning journey into software development**, documenting the process of building a real application step by step.
+
+---
+
+# 👨‍💻 Author
 
 Victor (Software) Mukumbu
+
+---
+
+# 📜 License
+
+MIT License
