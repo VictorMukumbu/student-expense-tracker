@@ -3,7 +3,7 @@
 A modern JavaScript web application for tracking and analyzing daily expenses.  
 The app allows users to manage spending, analyze categories, and maintain persistent data directly in the browser.
 
--day 10,11
+- day 10,11
 
 ---
 

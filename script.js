@@ -113,9 +113,13 @@ function clearInputs() {
 
 //make date readable
 function formatDate(dateString) {
-  if (!dateString) return "No date";// handle empty or undefined date
+  if (!dateString) return "No date";// handle empty date
   
   const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) {
+    return "Invalid date";
+  }//handle invalid date input
 
   const options = {
     day: "numeric",
@@ -160,11 +164,6 @@ function createExpenseListItem(expense) {
     expenseCategoryInput.value = expense.category;
     expenseDateInput.value = expense.date || "";
 
-
-    expenses = expenses.filter((item) => item !== expense);
-    saveExpensesToLocalStorage();
-    recalculateTotals();
-    renderExpenses();
 
     addExpenseBtn.textContent = "Update Expense";
 
@@ -245,6 +244,9 @@ function renderExpenses() {
   filteredExpenses.forEach((expense) => {
     createExpenseListItem(expense);
   });
+
+  renderCategoryChart();
+
 }
 
 function addExpense() {
@@ -282,9 +284,9 @@ function addExpense() {
     expenses.push(expense);
   }
   saveExpensesToLocalStorage();
-
-  renderExpenses();
+  
   recalculateTotals();
+  renderExpenses();
 
   clearInputs();
 
@@ -311,7 +313,7 @@ function clearAllExpenses() {
 
 const navLinks = document.querySelectorAll(".section-nav a");
 const trackedSections = document.querySelectorAll(
-  "#addExpenseSection, #expensesSection, #insightsSection, #categoryTotalsSection"
+  "#addExpenseSection, #expensesSection, #insightsSection,#spendingChartSection, #categoryTotalsSection"
 );
 
 // focus on updating active nav link based on scroll position
@@ -341,6 +343,35 @@ function updateActiveNavLink() {
   });
 }
 
+function renderCategoryChart() {
+  const chartContainer = document.getElementById("categoryChart");
+
+  // clear previous chart
+  chartContainer.innerHTML = "";
+
+  const maxValue = Math.max(...Object.values(categoryTotals), 1);
+
+  for (let category in categoryTotals) {
+    const amount = categoryTotals[category];
+
+    const percentage = (amount / maxValue) * 100;
+
+    const row = document.createElement("div");
+    row.className = "chart-row";
+
+    row.innerHTML = `
+      <div class="chart-label">${category}</div>
+      <div class="chart-bar-container">
+        <div class="chart-bar" style="width:${percentage}%"></div>
+      </div>
+      <div class="chart-value">KES ${amount.toFixed(2)}</div>
+    `;
+
+    chartContainer.appendChild(row);
+  }
+}
+
+
 function loadExpensesFromLocalStorage() {
   const savedExpenses = localStorage.getItem("expenses");
 
@@ -349,10 +380,10 @@ function loadExpensesFromLocalStorage() {
   }
 
   expenses = JSON.parse(savedExpenses);
-
+  
+  recalculateTotals();
   renderExpenses();
 
-  recalculateTotals();
 }
 
 addExpenseBtn.addEventListener("click", addExpense);
